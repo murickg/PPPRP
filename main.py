@@ -1,5 +1,6 @@
 from flask import Flask, jsonify
 from datetime import datetime
+import requests
 
 app = Flask(__name__)
 
@@ -20,12 +21,10 @@ def get_current_time():
     time_requests_count += 1
 
     # Записываем информацию о текущем обращении
-    time_requests_info.append({
-        'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    })
+    time_request = requests.get('http://worldtimeapi.org/api/timezone/Europe/Moscow')
 
     # Возвращаем текущее время
-    return jsonify({'current_time': datetime.now().strftime('%Y-%m-%d %H:%M:%S')})
+    return time_request.json()['datetime']
 
 
 # Endpoint для получения статистики обращений к /time endpoint'у
