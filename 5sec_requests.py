@@ -6,7 +6,7 @@ import time
 def fetch_statistics_and_write_to_file():
     try:
         # Отправляем GET запрос к /statistics endpoint'у нашего веб-приложения
-        response = requests.get('http://localhost:5001/statistics')
+        response = requests.get('http://web-service/statistics')
 
         # Проверяем успешность запроса
         if response.status_code == 200:
@@ -16,6 +16,7 @@ def fetch_statistics_and_write_to_file():
             # Записываем полученное количество обращений в файл
             with open('statistics.txt', 'a') as f:
                 f.write(f'{time_requests_count}\n')
+
         else:
             print(f'Ошибка при запросе: {response.status_code}')
     except Exception as e:
