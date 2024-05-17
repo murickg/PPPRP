@@ -2,7 +2,11 @@ FROM python:3.9
 
 RUN pip install requests
 
-COPY 5sec_requests.py /app
 WORKDIR /app
+COPY 5sec_requests.py /app
+
+
+EXPOSE 8001
+
 
 CMD ["python", "5sec_requests.py"]
