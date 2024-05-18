@@ -10,3 +10,8 @@ docker push murick/script
 kubectl apply -f /Users/muradgamzatov/Desktop/ppprp/app_deployment.yaml
 kubectl apply -f /Users/muradgamzatov/Desktop/ppprp/clusterip.yaml
 kubectl apply -f /Users/muradgamzatov/Desktop/ppprp/script_deployment.yaml
+
+# Применение манифестов конфигураций Istio
+kubectl apply -f /Users/muradgamzatov/Desktop/ppprp/gateway.yaml
+kubectl apply -f /Users/muradgamzatov/Desktop/ppprp/virtual_service.yaml
+kubectl apply -f /Users/muradgamzatov/Desktop/ppprp/external_service.yaml
