@@ -17,28 +17,51 @@
 minikube start
 ```
 
-### 2 step
+### 2 step 
+
+Установим Istio
+```bash
+curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.22.0 TARGET_ARCH=x86_64 sh -
+```
+Переместимся в каталог пакетов Istio
+```bash
+cd istio-1.21.0
+```
+Добавьте клиент istioctl в свой путь
+```bash
+export PATH=$PWD/bin:$PATH
+```
+Для этой установки мы используем демонстрационный профиль конфигурации.
+
+```bash
+istioctl install --set profile=demo -y --set meshConfig.outboundTrafficPolicy.mode=REGISTRY_ONLY
+```
+Добавьте метку пространства имен, чтобы проинструктировать Istio автоматически внедрять прокси Envoy sidecar при последующем развертывании приложения:
+```bash
+kubectl label namespace default istio-injection=enabled
+```
+### 3 step
 
 Создание docker-образов и применение манифестов приложения, скрипта и сервиса
 ```bash
 sh dpl.sh
 ```
 
-### 3 step 
+### 4 step 
 
 Соединение с нашим LoadBalancer сервисом
 ```bash
 minikube tunnel
 ```
 
-### 4 step
+### 5 step
 Во втором терминале получим URL-адрес для подключения к нашему сервису
 ```bash
 minikube service web-service
 ```
 Добавив `/time` или `/statistics` к полученному URL, появится доступ к текущему времени и статистике заходов на сайт  
 
-### 5 step
+### 6 step
 Чтобы прочитать файл `statistics.txt`, при помощи `kubectl get pods` получим название пода со скриптом.
 Дальше вводим 
 ```bash
