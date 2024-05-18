@@ -1,7 +1,6 @@
 from flask import Flask, jsonify
 from datetime import datetime
 import requests
-
 app = Flask(__name__)
 
 # Счетчик для подсчета количества обращений к /time endpoint'у
@@ -21,10 +20,13 @@ def get_current_time():
     time_requests_count += 1
 
     # Записываем информацию о текущем обращении
-    time_request = requests.get('http://worldtimeapi.org/api/timezone/Europe/Moscow')
+    response = requests.get('http://worldtimeapi.org/api/timezone/Europe/Moscow')
+    if response.status_code == 200:
+        return response.json()['datetime']
+    else:
+        return f"Ошибка при запросе{response.status_code}"
 
     # Возвращаем текущее время
-    return time_request.json()['datetime']
 
 
 # Endpoint для получения статистики обращений к /time endpoint'у
